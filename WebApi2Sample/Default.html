@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Product App</title>
+
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/toastr.css" rel="stylesheet" />
+    <link href="Content/main.css" rel="stylesheet" />
+
+    <!--<script src="Scripts/lib/jquery-2.0.3.min.js"></script>
+    <script src="Scripts/lib/underscore.js"></script>
+
+    <script src="Scripts/lib/knockout-3.0.0.min.js"></script>
+    <script src="Scripts/lib/knockout.punches.js"></script>
+    <script src="Scripts/lib/knockout-es5.min.js"></script>
+    
+    <script src="Scripts/lib/toastr.js"></script>
+
+    <script src="Scripts/models/product.js"></script>
+    <script src="Scripts/viewmodels/products.js"></script>-->    
+
+    <script data-main="Scripts/main" src="Scripts/lib/require.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="span6">
+                <h2 class="text-center">{{ title }}</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Product Name</th>
+                            <th>Category e</th>
+                            <th>Pricedd</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: products">
+                        <!-- ko ifnot: isInEditMode -->                        
+                        <tr>
+                            <td>{{ id }}</td>
+                            <td>{{ name }}</td>
+                            <td>{{ category }}</td>
+                            <td>${{ price }}</td>
+                            <td>
+                                <button class="btn btn-primary" data-bind="click: setEditable">Edit</button>
+                                <button class="btn btn-danger" data-bind="click: $parent.deleteProduct.bind($parent)">Delete</button>
+                            </td>
+                        </tr>
+                        <!-- /ko -->
+                        
+                        <!-- ko if: isInEditMode -->
+                        <tr>
+                            <td>{{ id }}</td>
+                            <td><input class="span2" type="text" data-bind="value: name " /></td>
+                            <td><input class="span2" type="text" data-bind="value: category " /></td>
+                            <td class="input-prepend">
+                                <span class="add-on">$</span>
+                                <input class="span1" type="number" data-bind="value: price" step="0.01" />
+                            </td>
+                            <td>
+                                <button class="btn btn-success" data-bind="click: $parent.saveProduct.bind($parent)">Save</button>
+                            </td>
+                        </tr>
+                        <!-- /ko -->
+
+                    </tbody>
+                </table>
+                <button class="btn btn-primary" data-bind="click: getAllProducts">Refresh List</button>
+            </div>
+            
+            <div class="span6 form-inline">
+                <h2>Search by ID</h2>
+                <input type="text" size="5" data-bind="value: searchText" />
+                <input type="button" class="btn" value="Search" data-bind="click: findProduct" />                
+                                         
+                <br/><br />
+                <h2 class="text-center">Add New Product</h2>
+                <div class="form-horizontal" data-bind="with: newProduct">
+                    <div class="control-group">
+                        <label class="control-label">Name</label>
+                        <input class="controls" type="text" data-bind="value: name" />    
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Category</label>
+                        <input class="controls" type="text" data-bind="value: category " />    
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Price</label>
+                        <input class="controls" type="number" data-bind="value: price" step="0.01" />    
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="controls">
+                            <button class="btn" data-bind="click: $parent.addProduct.bind($parent)">Add Product</button>        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="btn" data-bind="click: rpcGetSample">RPC Style Get Sample</button>
+    </div>
+</body>
+</html>
